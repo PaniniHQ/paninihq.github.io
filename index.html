@@ -1,0 +1,105 @@
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+ @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap');
+ .pn-root { font-family: 'EB Garamond', Georgia, serif; color: var(--color-text-primary); max-width: 640px; margin: 0 auto; padding: 0 1.5rem 4rem; line-height: 1.7; }
+
+ .pn-nav { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; margin: 0 0 0.5rem; }
+ .pn-nav-left { display: flex; align-items: center; gap: 2rem; }
+ .pn-wordmark { font-family: 'DM Mono', monospace; font-weight: 300; font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-text-secondary); margin: 0; }
+ .pn-nav-links { display: flex; gap: 1.5rem; }
+ .pn-nav-link { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 300; letter-spacing: 0.06em; color: var(--color-text-tertiary); text-decoration: none; }
+ .pn-nav-link:hover { color: var(--color-text-primary); }
+ .pn-nav-link.disabled { opacity: 0.4; pointer-events: none; cursor: default; }
+ .pn-info-btn { background: none; border: none; padding: 0; margin: 0 0 0 6px; cursor: pointer; color: var(--color-text-tertiary); display: inline-flex; align-items: center; vertical-align: middle; }
+ .pn-info-btn:hover { color: var(--color-text-secondary); }
+ .pn-info-btn svg { width: 14px; height: 14px; }
+
+ .pn-banner { width: 100%; margin: 0 0 2.5rem; overflow: hidden; border-radius: 6px; border: 0.5px solid var(--color-border-tertiary); }
+ .pn-banner img { width: 100%; height: auto; display: block; }
+
+ .pn-heading { font-size: 22px; font-weight: 500; line-height: 1.4; margin: 0 0 1rem; }
+ .pn-sub { font-size: 17px; color: var(--color-text-secondary); margin: 0 0 3.5rem; line-height: 1.65; }
+ .pn-divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 0 0 2.5rem; }
+ .pn-section-label { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 300; letter-spacing: 0.14em; text-transform: uppercase; color: var(--color-text-tertiary); margin: 0 0 1rem; }
+ .pn-people { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 0 0 3rem; }
+ .pn-person-name { font-size: 17px; font-weight: 500; margin: 0 0 2px; }
+ .pn-person-desc { font-size: 15px; color: var(--color-text-secondary); margin: 0 0 6px; line-height: 1.5; }
+ .pn-person-link { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 300; letter-spacing: 0.06em; color: var(--color-text-tertiary); text-decoration: none; }
+ .pn-person-link:hover { color: var(--color-text-secondary); }
+ .pn-contact { font-size: 16px; color: var(--color-text-secondary); }
+ .pn-contact a { color: var(--color-text-primary); text-decoration: underline; text-underline-offset: 3px; }
+
+ .pn-subscribe { margin: 0 0 3rem; }
+ .pn-subscribe-form { display: flex; gap: 0.5rem; max-width: 400px; }
+ .pn-subscribe-input { font-family: 'EB Garamond', Georgia, serif; font-size: 15px; padding: 0.5rem 0.75rem; border: 1px solid #999; border-radius: 4px; background: transparent; color: var(--color-text-primary); flex: 1; outline: none; }
+ .pn-subscribe-input::placeholder { color: #999; }
+ .pn-subscribe-input:focus { border-color: #555; }
+ .pn-subscribe-btn { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 300; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.5rem 1rem; border: 1px solid #999; border-radius: 4px; background: transparent; color: var(--color-text-secondary); cursor: pointer; white-space: nowrap; }
+ .pn-subscribe-btn:hover { color: var(--color-text-primary); border-color: #555; }
+
+ @media (max-width: 480px) {
+   .pn-nav { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+   .pn-nav-left { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+   .pn-people { grid-template-columns: 1fr; }
+   .pn-subscribe-form { flex-direction: column; }
+ }
+</style>
+
+<div class="pn-root">
+  <nav class="pn-nav">
+    <div class="pn-nav-left">
+      <p class="pn-wordmark">Panini</p>
+      <div class="pn-nav-links">
+        <a href="/blog" class="pn-nav-link disabled" aria-disabled="true">Blog</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="pn-banner">
+    <img src="banner.png" alt="Panini banner">
+  </div>
+
+  <p class="pn-heading"><em>Panini</em><button class="pn-info-btn" onclick="window.open('https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini','_blank');window.open('https://en.wikipedia.org/wiki/Panini_(sandwich)','_blank');" title="What is Panini?"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg></button> is a Product Technology Lab from Bengaluru, India.</p>
+  <p class="pn-sub">
+      We experiment with, and ship, high quality intelligent systems that provide sustainable value to humans around us.
+  </p>
+
+  <hr class="pn-divider">
+
+  <p class="pn-section-label">Recent Works</p>
+  <p class="pn-sub">Coming soon.</p>
+
+  <hr class="pn-divider">
+
+  <p class="pn-section-label">The team</p>
+  <div class="pn-people">
+    <div>
+      <p class="pn-person-name">Mithun Arunan</p>
+      <p class="pn-person-desc">Infrastructure, Dev Tooling, Observability, and Production AI</p>
+      <a href="https://in.linkedin.com/in/mithun-arunan" class="pn-person-link">Know more &rarr;</a>
+    </div>
+    <div>
+      <p class="pn-person-name">Abhinav Tushar</p>
+      <p class="pn-person-desc">Machine learning, Speech Technologies, and Conversational AI</p>
+      <a href="https://lepisma.xyz/wiki/about" class="pn-person-link">Know more &rarr;</a>
+    </div>
+  </div>
+
+  <hr class="pn-divider">
+
+  <div class="pn-subscribe">
+      <p class="pn-section-label">Stay updated</p>
+      <p>Panini is early in its journey. Stay connected to know what we are building, read notes from our experiments and new releases. Unsubscribe any time.</p>
+    <form class="pn-subscribe-form" onsubmit="return false;">
+      <input type="email" class="pn-subscribe-input" placeholder="Your email">
+      <button type="submit" class="pn-subscribe-btn">Subscribe</button>
+    </form>
+  </div>
+
+  <hr class="pn-divider">
+
+  <p class="pn-contact">
+    Reach us at <a href="mailto:hello@paninihq.com">hello@paninihq.com</a> to know how can we help you. Or just to say hi!
+  </p>
+</div>
