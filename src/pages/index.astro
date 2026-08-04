@@ -1,0 +1,70 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="Panini | Product Technology Lab">
+  <div class="pn-heading">
+    <em>Panini</em>
+    <button
+      class="pn-info-btn"
+      popovertarget="pn-info-popover"
+      title="What is Panini?"
+      aria-label="What is Panini?"
+    >
+      <svg
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="16" x2="12" y2="12"></line>
+        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+      </svg>
+    </button>
+    <div id="pn-info-popover" popover class="pn-info-popover">
+      <p>The name has two meanings</p>
+      <p>
+        <a href="https://en.wikipedia.org/wiki/P%C4%81%E1%B9%87ini" target="_blank" rel="noopener">Pāṇini</a>,
+        the ancient Sanskrit grammarian whose rules still shape how we think about formal systems, and, well, <a href="https://en.wikipedia.org/wiki/Panini_(sandwich)" target="_blank" rel="noopener">panini</a>,
+        the sandwich.
+      </p>
+    </div>
+    is a Product Technology Lab from Bengaluru, India.
+  </div>
+  <p class="pn-sub">
+    We experiment with, and ship, high quality intelligent systems that
+    provide sustainable value to humans around us.
+  </p>
+
+  <hr class="pn-divider" />
+
+  <p class="pn-section-label">Recent Works</p>
+  <p class="pn-sub">Coming soon.</p>
+
+  <hr class="pn-divider" />
+
+  <p class="pn-section-label">The team</p>
+  <div class="pn-people">
+    <div>
+      <p class="pn-person-name">Mithun Arunan</p>
+      <p class="pn-person-desc">
+        Infrastructure, Dev Tooling, Observability, and Production AI
+      </p>
+      <a href="https://in.linkedin.com/in/mithun-arunan" class="pn-person-link"
+        >Know more &rarr;</a
+      >
+    </div>
+    <div>
+      <p class="pn-person-name">Abhinav Tushar</p>
+      <p class="pn-person-desc">
+        Machine learning, Speech Technologies, and Conversational AI
+      </p>
+      <a href="https://lepisma.xyz/wiki/about" class="pn-person-link"
+        >Know more &rarr;</a
+      >
+    </div>
+  </div>
+</Base>

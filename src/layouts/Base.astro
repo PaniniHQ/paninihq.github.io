@@ -1,0 +1,509 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  activeNav?: 'blog';
+}
+
+const {
+  title,
+  description = 'Panini is a Product Technology Lab from Bengaluru, India.',
+  activeNav,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <title>{title}</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap');
+    </style>
+  </head>
+  <body>
+    <div class="pn-root">
+      <nav class="pn-nav">
+        <div class="pn-nav-left">
+          <a href="/" class="pn-wordmark-link"><p class="pn-wordmark">Panini</p></a>
+          <div class="pn-nav-links">
+            <a href="/blog" class:list={['pn-nav-link', { active: activeNav === 'blog' }]}>Blog</a>
+          </div>
+        </div>
+      </nav>
+
+      <slot />
+
+      <hr class="pn-divider" />
+
+      <div class="pn-subscribe">
+        <p class="pn-section-label">Stay updated</p>
+        <p>
+          Panini is early in its journey. Stay connected to know what we are
+          building, read notes from our experiments and new releases.
+          Unsubscribe any time.
+        </p>
+        <form
+          class="pn-subscribe-form"
+          action="https://buttondown.com/api/emails/embed-subscribe/paninihq"
+          method="post"
+        >
+          <input
+            type="email"
+            name="email"
+            class="pn-subscribe-input"
+            placeholder="Your email"
+            required
+          />
+          <button type="submit" class="pn-subscribe-btn">Subscribe</button>
+        </form>
+      </div>
+
+      <hr class="pn-divider" />
+
+      <p class="pn-contact">
+        Reach us at <a href="mailto:hello@paninihq.com">hello@paninihq.com</a>
+        to know how can we help you. Or just to say hi!
+      </p>
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --color-bg: #ffffff;
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #58585a;
+    --color-text-tertiary: #8a8a8c;
+    --color-border-tertiary: #e2e2e3;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --color-bg: #111112;
+      --color-text-primary: #ededee;
+      --color-text-secondary: #b0b0b2;
+      --color-text-tertiary: #838385;
+      --color-border-tertiary: #2c2c2e;
+    }
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    background: var(--color-bg);
+  }
+
+  .pn-root {
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--color-text-primary);
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 4rem;
+    line-height: 1.7;
+  }
+
+  .pn-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0 1.25rem;
+    margin: 0 0 2.5rem;
+  }
+
+  .pn-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .pn-wordmark-link {
+    text-decoration: none;
+  }
+
+  .pn-wordmark {
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-secondary);
+    margin: 0;
+  }
+
+  .pn-nav-links {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .pn-nav-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+  }
+
+  .pn-nav-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  .pn-nav-link.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .pn-nav-link.active {
+    color: var(--color-text-primary);
+  }
+
+  .pn-info-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0 6px;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  .pn-info-btn:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .pn-info-popover {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    background: var(--color-bg);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+    max-width: 360px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  .pn-info-popover p {
+    margin: 0 0 0.75rem;
+  }
+
+  .pn-info-popover p:last-child {
+    margin-bottom: 0;
+  }
+
+  .pn-info-popover a {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pn-info-btn svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .pn-heading {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 1.4;
+    margin: 0 0 1rem;
+  }
+
+  .pn-sub {
+    font-size: 17px;
+    color: var(--color-text-secondary);
+    margin: 0 0 3.5rem;
+    line-height: 1.65;
+  }
+
+  .pn-divider {
+    border: none;
+    border-top: 0.5px solid var(--color-border-tertiary);
+    margin: 0 0 2.5rem;
+  }
+
+  .pn-section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 0 0 1rem;
+  }
+
+  .pn-people {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 0 0 3rem;
+  }
+
+  .pn-person-name {
+    font-size: 17px;
+    font-weight: 500;
+    margin: 0 0 2px;
+  }
+
+  .pn-person-desc {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin: 0 0 6px;
+    line-height: 1.5;
+  }
+
+  .pn-person-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+  }
+
+  .pn-person-link:hover {
+    color: var(--color-text-secondary);
+  }
+
+  .pn-contact {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+
+  .pn-contact a {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pn-subscribe {
+    margin: 0 0 3rem;
+  }
+
+  .pn-subscribe-form {
+    display: flex;
+    gap: 0.5rem;
+    max-width: 400px;
+  }
+
+  .pn-subscribe-input {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 15px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-text-primary);
+    flex: 1;
+    outline: none;
+  }
+
+  .pn-subscribe-input::placeholder {
+    color: #999;
+  }
+
+  .pn-subscribe-input:focus {
+    border-color: #555;
+  }
+
+  .pn-subscribe-btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid #999;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .pn-subscribe-btn:hover {
+    color: var(--color-text-primary);
+    border-color: #555;
+  }
+
+  /* Blog listing */
+  .pn-post-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 3rem;
+  }
+
+  .pn-post-item {
+    margin: 0 0 1.75rem;
+  }
+
+  .pn-post-item-title {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 0 0 4px;
+  }
+
+  .pn-post-item-title a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+
+  .pn-post-item-title a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pn-post-item-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+    margin: 0 0 4px;
+  }
+
+  .pn-post-item-desc {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Post page */
+  .pn-post-header {
+    margin: 0 0 2.5rem;
+  }
+
+  .pn-post-title {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.35;
+    margin: 0 0 0.75rem;
+  }
+
+  .pn-post-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+    margin: 0;
+  }
+
+  .pn-prose {
+    font-size: 17px;
+    margin: 0 0 3rem;
+  }
+
+  .pn-prose p {
+    margin: 0 0 1.5rem;
+  }
+
+  .pn-prose h2 {
+    font-size: 20px;
+    font-weight: 500;
+    margin: 2.5rem 0 1rem;
+  }
+
+  .pn-prose h3 {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 2rem 0 1rem;
+  }
+
+  .pn-prose a {
+    color: var(--color-text-primary);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .pn-prose ul,
+  .pn-prose ol {
+    margin: 0 0 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  .pn-prose li {
+    margin: 0 0 0.5rem;
+  }
+
+  .pn-prose blockquote {
+    margin: 0 0 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--color-border-tertiary);
+    color: var(--color-text-secondary);
+  }
+
+  .pn-prose code {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85em;
+    background: var(--color-border-tertiary);
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+  }
+
+  .pn-prose pre {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    overflow-x: auto;
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 0 0 1.5rem;
+    border: 0.5px solid var(--color-border-tertiary);
+  }
+
+  .pn-prose pre code {
+    background: none;
+    padding: 0;
+  }
+
+  .pn-back-link {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    color: var(--color-text-tertiary);
+    text-decoration: none;
+    margin: 0 0 2.5rem;
+  }
+
+  .pn-back-link:hover {
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 480px) {
+    .pn-nav {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .pn-nav-left {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .pn-people {
+      grid-template-columns: 1fr;
+    }
+
+    .pn-subscribe-form {
+      flex-direction: column;
+    }
+  }
+</style>
