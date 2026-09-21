@@ -1,5 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 2);
 ---
 
 <Base title="Panini | Product Technology Lab">
@@ -46,7 +51,35 @@ import Base from '../layouts/Base.astro';
 
   <hr class="pn-divider" />
 
-  <p class="pn-section-label">The team</p>
+  <p class="pn-section-label">Recent Posts</p>
+  {
+    posts.length === 0 ? (
+      <p class="pn-sub">Nothing here yet. Check back soon.</p>
+    ) : (
+      <ul class="pn-post-list">
+        {posts.map((post) => (
+          <li class="pn-post-item">
+            <p class="pn-post-item-title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </p>
+            <p class="pn-post-item-meta">
+              {post.data.pubDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </p>
+            <p class="pn-post-item-desc">{post.data.description}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  <a href="/blog" class="pn-person-link">All posts &rarr;</a>
+
+  <hr class="pn-divider" />
+
+  <p class="pn-section-label" id="team">The team</p>
   <div class="pn-people">
     <div>
       <p class="pn-person-name">Mithun Arunan</p>
