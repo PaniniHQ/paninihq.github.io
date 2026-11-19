@@ -2,7 +2,7 @@
 interface Props {
   title: string;
   description?: string;
-  activeNav?: 'blog';
+  activeNav?: 'blog' | 'resources';
 }
 
 const {
@@ -22,26 +22,28 @@ const {
     <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
     <title>{title}</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@300;400&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Mono:wght@400;500&display=swap');
     </style>
   </head>
   <body>
     <div class="pn-root">
-      <nav class="pn-nav">
+      <nav class="pn-nav" aria-label="Main">
         <div class="pn-nav-left">
           <a href="/" class="pn-wordmark-link"><p class="pn-wordmark">Panini</p></a>
           <div class="pn-nav-links">
-            <a href="/blog" class:list={['pn-nav-link', { active: activeNav === 'blog' }]}>Blog</a>
+            <a href="/blog" class:list={['pn-nav-link', { active: activeNav === 'blog' }]} aria-current={activeNav === 'blog' ? 'page' : undefined}>Blog</a>
+            <a href="/resources" class:list={['pn-nav-link', { active: activeNav === 'resources' }]} aria-current={activeNav === 'resources' ? 'page' : undefined}>Resources</a>
           </div>
         </div>
       </nav>
 
-      <slot />
+      <main>
+        <slot />
+      </main>
 
-      <hr class="pn-divider" />
-
-      <div class="pn-subscribe">
-        <p class="pn-section-label">Stay updated</p>
+      <footer>
+      <section class="pn-section pn-subscribe" aria-labelledby="pn-subscribe-label">
+        <h2 class="pn-section-label" id="pn-subscribe-label">Stay updated</h2>
         <p>
           Panini is early in its journey. Stay connected to know what we are
           building, read notes from our experiments and new releases.
@@ -55,6 +57,7 @@ const {
           <input
             type="email"
             name="email"
+            aria-label="Email address"
             class="pn-subscribe-input"
             placeholder="Your email"
             required
@@ -68,13 +71,14 @@ const {
             rel="noopener">kill the newsletter</a
           > to turn it into an RSS feed instead.
         </p>
-      </div>
+      </section>
 
-      <hr class="pn-divider" />
-
+      <section class="pn-section">
       <p class="pn-contact">
         Reach us at <a href="mailto:hello@paninihq.com">hello@paninihq.com</a> to know how can we help you. Or just to say hi!
       </p>
+      </section>
+      </footer>
     </div>
   </body>
 </html>
@@ -82,19 +86,23 @@ const {
 <style is:global>
   :root {
     --color-bg: #ffffff;
-    --color-text-primary: #1a1a1a;
-    --color-text-secondary: #58585a;
-    --color-text-tertiary: #8a8a8c;
-    --color-border-tertiary: #e2e2e3;
+    --color-text-primary: #141414;
+    --color-text-secondary: #3d3d40;
+    --color-text-tertiary: #5c5c60;
+    --color-border-tertiary: #d6d6d8;
+    --color-border-strong: #6e6e72;
+    --color-surface: #f4f4f5;
   }
 
   @media (prefers-color-scheme: dark) {
     :root {
       --color-bg: #111112;
-      --color-text-primary: #ededee;
-      --color-text-secondary: #b0b0b2;
-      --color-text-tertiary: #838385;
-      --color-border-tertiary: #2c2c2e;
+      --color-text-primary: #f3f3f4;
+      --color-text-secondary: #cfcfd2;
+      --color-text-tertiary: #a6a6aa;
+      --color-border-tertiary: #3a3a3e;
+      --color-border-strong: #8e8e93;
+      --color-surface: #1c1c1e;
     }
   }
 
@@ -114,7 +122,16 @@ const {
     max-width: 640px;
     margin: 0 auto;
     padding: 3rem 1.5rem 4rem;
+    font-size: 18px;
     line-height: 1.7;
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible {
+    outline: 2px solid var(--color-text-primary);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 
   .pn-nav {
@@ -122,7 +139,8 @@ const {
     align-items: center;
     justify-content: space-between;
     padding: 0 0 1.25rem;
-    margin: 0 0 2.5rem;
+    margin: 0 0 3rem;
+    border-bottom: 1px solid var(--color-border-tertiary);
   }
 
   .pn-nav-left {
@@ -137,11 +155,11 @@ const {
 
   .pn-wordmark {
     font-family: 'DM Mono', monospace;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 13px;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
     margin: 0;
   }
 
@@ -152,11 +170,13 @@ const {
 
   .pn-nav-link {
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.06em;
-    color: var(--color-text-tertiary);
+    color: var(--color-text-secondary);
     text-decoration: none;
+    padding: 2px 0;
+    border-bottom: 1px solid transparent;
   }
 
   .pn-nav-link:hover {
@@ -171,6 +191,8 @@ const {
 
   .pn-nav-link.active {
     color: var(--color-text-primary);
+    font-weight: 500;
+    border-bottom-color: var(--color-text-primary);
   }
 
   .pn-info-btn {
@@ -179,23 +201,23 @@ const {
     padding: 0;
     margin: 0 6px;
     cursor: pointer;
-    color: var(--color-text-tertiary);
+    color: var(--color-text-secondary);
     display: inline-flex;
     align-items: center;
     vertical-align: middle;
   }
 
   .pn-info-btn:hover {
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
   }
 
   .pn-info-popover {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 15px;
+    font-size: 17px;
     line-height: 1.6;
     color: var(--color-text-secondary);
     background: var(--color-bg);
-    border: 0.5px solid var(--color-border-tertiary);
+    border: 1px solid var(--color-border-tertiary);
     border-radius: 8px;
     padding: 1.25rem 1.5rem;
     max-width: 360px;
@@ -217,77 +239,140 @@ const {
   }
 
   .pn-info-btn svg {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
   }
 
   .pn-heading {
-    font-size: 22px;
+    font-size: 27px;
     font-weight: 500;
-    line-height: 1.4;
+    line-height: 1.35;
     margin: 0 0 1rem;
   }
 
   .pn-sub {
-    font-size: 17px;
+    font-size: 19px;
     color: var(--color-text-secondary);
-    margin: 0 0 3.5rem;
+    margin: 0 0 1.5rem;
     line-height: 1.65;
+  }
+
+  .pn-hero {
+    padding: 0 0 1.5rem;
+  }
+
+  .pn-sub:last-child {
+    margin-bottom: 0;
   }
 
   .pn-divider {
     border: none;
-    border-top: 0.5px solid var(--color-border-tertiary);
-    opacity: 0.6;
+    border-top: 1px solid var(--color-border-tertiary);
     margin: 2.5rem 0;
+  }
+
+  /* Distinct page sections, each with a rule and generous breathing room */
+  .pn-section {
+    border-top: 1px solid var(--color-border-tertiary);
+    padding: 2.75rem 0;
+  }
+
+  /* Section with a shaded band that bleeds to the full viewport width,
+     while its content stays aligned with the text column */
+  .pn-section.pn-card {
+    border-top: none;
+    background: var(--color-surface);
+    box-shadow: 0 0 0 100vmax var(--color-surface);
+    clip-path: inset(0 -100vmax);
+    padding: 2.75rem 0;
+    margin: 1rem 0 2rem;
+  }
+
+  .pn-card + .pn-section {
+    border-top: none;
+    padding-top: 1rem;
+  }
+
+  footer .pn-section:last-child {
+    padding-bottom: 0;
   }
 
   .pn-section-label {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 500;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--color-text-tertiary);
-    margin: 0 0 1rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 1.5rem;
+    line-height: 1.4;
   }
 
   .pn-people {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 0 0 3rem;
+    gap: 1rem;
+    margin: 0;
+  }
+
+  .pn-person {
+    display: flex;
+    flex-direction: column;
+    color: inherit;
+    text-decoration: none;
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    padding: 1.25rem 1.5rem;
+    transition: border-color 0.15s ease;
+  }
+
+  .pn-person:hover {
+    border-color: var(--color-border-strong);
+  }
+
+  .pn-person:hover .pn-person-link {
+    color: var(--color-text-primary);
+    text-decoration-color: currentColor;
+  }
+
+  .pn-person .pn-person-link {
+    margin-top: auto;
+    align-self: flex-start;
   }
 
   .pn-person-name {
-    font-size: 17px;
+    font-size: 19px;
     font-weight: 500;
     margin: 0 0 2px;
   }
 
   .pn-person-desc {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--color-text-secondary);
-    margin: 0 0 6px;
+    margin: 0 0 8px;
     line-height: 1.5;
   }
 
   .pn-person-link {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.06em;
-    color: var(--color-text-tertiary);
-    text-decoration: none;
+    color: var(--color-text-secondary);
+    text-decoration: underline;
+    text-decoration-color: var(--color-border-tertiary);
+    text-underline-offset: 4px;
   }
 
   .pn-person-link:hover {
-    color: var(--color-text-secondary);
+    color: var(--color-text-primary);
+    text-decoration-color: currentColor;
   }
 
   .pn-contact {
-    font-size: 16px;
+    font-size: 18px;
     color: var(--color-text-secondary);
+    margin: 0;
   }
 
   .pn-contact a {
@@ -296,8 +381,9 @@ const {
     text-underline-offset: 3px;
   }
 
-  .pn-subscribe {
-    margin: 0 0 3rem;
+  .pn-subscribe > p:not([class]) {
+    color: var(--color-text-secondary);
+    margin: 0 0 1.25rem;
   }
 
   .pn-subscribe-form {
@@ -308,9 +394,9 @@ const {
 
   .pn-subscribe-input {
     font-family: 'EB Garamond', Georgia, serif;
-    font-size: 15px;
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #999;
+    font-size: 17px;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
     border-radius: 4px;
     background: transparent;
     color: var(--color-text-primary);
@@ -319,35 +405,35 @@ const {
   }
 
   .pn-subscribe-input::placeholder {
-    color: #999;
+    color: var(--color-text-tertiary);
   }
 
   .pn-subscribe-input:focus {
-    border-color: #555;
+    border-color: var(--color-text-primary);
   }
 
   .pn-subscribe-btn {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     padding: 0.5rem 1rem;
-    border: 1px solid #999;
+    border: 1px solid var(--color-text-primary);
     border-radius: 4px;
-    background: transparent;
-    color: var(--color-text-secondary);
+    background: var(--color-text-primary);
+    color: var(--color-bg);
     cursor: pointer;
     white-space: nowrap;
   }
 
   .pn-subscribe-btn:hover {
-    color: var(--color-text-primary);
-    border-color: #555;
+    background: var(--color-text-secondary);
+    border-color: var(--color-text-secondary);
   }
 
   .pn-subscribe-note {
-    font-size: 13px;
+    font-size: 15px;
     color: var(--color-text-tertiary);
     margin: 0.75rem 0 0;
   }
@@ -362,15 +448,19 @@ const {
   .pn-post-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 3rem;
+    margin: 0 0 1.5rem;
   }
 
   .pn-post-item {
-    margin: 0 0 1.75rem;
+    margin: 0 0 2rem;
+  }
+
+  .pn-post-item:last-child {
+    margin-bottom: 0;
   }
 
   .pn-post-item-title {
-    font-size: 18px;
+    font-size: 21px;
     font-weight: 500;
     margin: 0 0 4px;
   }
@@ -387,15 +477,15 @@ const {
 
   .pn-post-item-meta {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.06em;
     color: var(--color-text-tertiary);
     margin: 0 0 4px;
   }
 
   .pn-post-item-desc {
-    font-size: 15px;
+    font-size: 17px;
     color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.5;
@@ -407,7 +497,7 @@ const {
   }
 
   .pn-post-title {
-    font-size: 26px;
+    font-size: 30px;
     font-weight: 500;
     line-height: 1.35;
     margin: 0 0 0.75rem;
@@ -415,15 +505,15 @@ const {
 
   .pn-post-meta {
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.06em;
     color: var(--color-text-tertiary);
     margin: 0;
   }
 
   .pn-prose {
-    font-size: 17px;
+    font-size: 19px;
     margin: 0 0 3rem;
   }
 
@@ -432,13 +522,13 @@ const {
   }
 
   .pn-prose h2 {
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 500;
     margin: 2.5rem 0 1rem;
   }
 
   .pn-prose h3 {
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     margin: 2rem 0 1rem;
   }
@@ -461,22 +551,21 @@ const {
 
   .pn-prose hr {
     border: none;
-    border-top: 0.5px solid var(--color-border-tertiary);
-    opacity: 0.6;
+    border-top: 1px solid var(--color-border-tertiary);
     margin: 2.5rem 0;
   }
 
   .pn-prose blockquote {
     margin: 0 0 1.5rem;
     padding-left: 1rem;
-    border-left: 2px solid var(--color-border-tertiary);
+    border-left: 3px solid var(--color-border-strong);
     color: var(--color-text-secondary);
   }
 
   .pn-prose code {
     font-family: 'DM Mono', monospace;
     font-size: 0.85em;
-    background: var(--color-border-tertiary);
+    background: var(--color-surface);
     padding: 0.1em 0.35em;
     border-radius: 3px;
   }
@@ -488,7 +577,8 @@ const {
     padding: 1rem;
     border-radius: 6px;
     margin: 0 0 1.5rem;
-    border: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-tertiary);
   }
 
   .pn-prose pre code {
@@ -510,7 +600,7 @@ const {
   .pn-prose figcaption {
     margin-top: 0.6rem;
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
+    font-size: 13px;
     letter-spacing: 0.03em;
     color: var(--color-text-tertiary);
     text-align: center;
@@ -519,10 +609,10 @@ const {
   .pn-back-link {
     display: inline-block;
     font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 13px;
+    font-weight: 400;
     letter-spacing: 0.06em;
-    color: var(--color-text-tertiary);
+    color: var(--color-text-secondary);
     text-decoration: none;
     margin: 0 0 2.5rem;
   }
