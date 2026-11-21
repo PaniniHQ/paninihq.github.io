@@ -43,9 +43,8 @@ const {
 
       <footer>
       <section class="pn-section pn-subscribe" aria-labelledby="pn-subscribe-label">
-        <h2 class="pn-section-label" id="pn-subscribe-label">Stay updated</h2>
         <p>
-          Panini is early in its journey. Stay connected to know what we are
+          Stay connected to know what we are
           building, read notes from our experiments and new releases.
           Unsubscribe any time.
         </p>
@@ -604,6 +603,52 @@ const {
     letter-spacing: 0.03em;
     color: var(--color-text-tertiary);
     text-align: center;
+  }
+
+  /* Back matter: end-of-post sections (acknowledgements, edits, bibliography,
+     etc.), written in post markdown inside <div class="pn-backmatter">. Each
+     ## heading starts a section; blank lines are needed around the div tags. */
+  .pn-prose .pn-backmatter {
+    border-top: 1px solid var(--color-border-tertiary);
+    margin: 3rem 0 0;
+    padding-top: 1.5rem;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+
+  .pn-prose .pn-backmatter h2 {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-tertiary);
+    margin: 2rem 0 0.75rem;
+  }
+
+  .pn-prose .pn-backmatter h2:first-child {
+    margin-top: 0;
+  }
+
+  .pn-prose .pn-backmatter h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin: 1.25rem 0 0.5rem;
+  }
+
+  .pn-prose .pn-backmatter p,
+  .pn-prose .pn-backmatter ul,
+  .pn-prose .pn-backmatter ol {
+    margin: 0 0 1rem;
+  }
+
+  .pn-prose .pn-backmatter li {
+    margin: 0 0 0.4rem;
+  }
+
+  .pn-prose .pn-backmatter a {
+    color: inherit;
   }
 
   .pn-back-link {
