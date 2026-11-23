@@ -585,6 +585,99 @@ const {
     padding: 0;
   }
 
+  /* Footnotes ([^1] in post markdown). GFM renders them in a trailing
+     section.footnotes with a visually hidden "Footnotes" heading. */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .pn-prose sup {
+    line-height: 0;
+  }
+
+  .pn-prose sup a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    text-decoration: none;
+    padding: 0 0.1em;
+  }
+
+  .pn-prose .footnotes {
+    border-top: 1px solid var(--color-border-tertiary);
+    margin: 2rem 0 0;
+    padding-top: 1rem;
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+
+  .pn-prose .footnotes ol {
+    margin: 0;
+  }
+
+  .pn-prose .footnotes li p {
+    margin: 0 0 0.5rem;
+  }
+
+  .pn-prose .footnotes a {
+    color: inherit;
+  }
+
+  .pn-prose .data-footnote-backref {
+    text-decoration: none;
+    margin-left: 0.25em;
+  }
+
+  /* Asides (Tufte-style margin notes), written in post markdown as
+     <aside> ... </aside> placed just before the paragraph they annotate.
+     Leave blank lines inside the tags to use markdown in the note. Narrow
+     screens show them inline as a block; wide screens float them into the
+     right margin, where they take no width from the text column. */
+  .pn-prose aside {
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--color-text-secondary);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-tertiary);
+    border-radius: 4px;
+    padding: 0.9rem 1.1rem;
+    margin: 0 0 1.5rem;
+  }
+
+  .pn-prose aside p {
+    margin: 0 0 0.75rem;
+  }
+
+  .pn-prose aside > :last-child {
+    margin-bottom: 0;
+  }
+
+  .pn-prose aside a {
+    color: inherit;
+  }
+
+  @media (min-width: 1160px) {
+    .pn-prose aside {
+      float: right;
+      clear: right;
+      width: 220px;
+      margin: 0.25rem -252px 1rem 0;
+      background: none;
+      border: none;
+      border-left: 2px solid var(--color-border-tertiary);
+      border-radius: 0;
+      padding: 0 0 0 0.75rem;
+      font-size: 15px;
+    }
+  }
+
   .pn-prose figure {
     margin: 2rem 0;
   }
@@ -649,6 +742,14 @@ const {
 
   .pn-prose .pn-backmatter a {
     color: inherit;
+  }
+
+  /* Bibliography from rehype-citation ([@key] cites, [^ref] placement). */
+  .pn-prose .references .csl-entry {
+    padding-left: 1.5em;
+    text-indent: -1.5em;
+    margin: 0 0 0.6rem;
+    overflow-wrap: anywhere;
   }
 
   .pn-back-link {
